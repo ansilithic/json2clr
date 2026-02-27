@@ -24,11 +24,13 @@ json2clr reads a JSON file of named hex colors, displays each with a terminal sw
 
 ## Install
 
-Requires macOS 14+ (Sonoma) and Swift 6.0.
+```sh
+brew install ansilithic/tap/json2clr
+```
+
+Or build from source (requires Xcode and macOS 14+):
 
 ```sh
-git clone https://github.com/ansilithic/json2clr.git
-cd json2clr
 make build && make install
 ```
 
@@ -45,7 +47,7 @@ json2clr <file> [--clr] [--install] [--output <output>]
 | `--install` | Install `.clr` to `~/Library/Colors` |
 | `-o, --output` | Output file path for `.clr` export |
 
-## Examples
+### Examples
 
 ```bash
 # Inspect a palette in the terminal
