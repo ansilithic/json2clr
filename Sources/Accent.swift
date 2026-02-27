@@ -60,15 +60,8 @@ struct JSON2CLR: ParsableCommand {
             print()
             print("  \(swatch)  \(styled(name, .bold))  \(styled(hex, .gray))  \(styled(rgbStr, .gray))")
 
-            let whiteRatio = String(format: "%.1f:1", info.contrastOnWhite)
-            let blackRatio = String(format: "%.1f:1", info.contrastOnBlack)
-            let whiteColor: Color = info.wcagOnWhite == "Fail" ? .red : .green
-            let blackColor: Color = info.wcagOnBlack == "Fail" ? .red : .green
-
-            print("      \(styled("\u{251C}\u{2500}\u{2500}", .gray)) \(styled("HSL", .cyan))      \(info.hsl.string)")
-            print("      \(styled("\u{251C}\u{2500}\u{2500}", .gray)) \(styled("CMYK", .cyan))     \(info.cmyk.string)")
-            print("      \(styled("\u{251C}\u{2500}\u{2500}", .gray)) \(styled("On white", .cyan)) \(whiteRatio) (\(styled(info.wcagOnWhite, whiteColor)))")
-            print("      \(styled("\u{2514}\u{2500}\u{2500}", .gray)) \(styled("On black", .cyan)) \(blackRatio) (\(styled(info.wcagOnBlack, blackColor)))")
+            print("      \(styled("\u{251C}\u{2500}\u{2500}", .gray)) \(styled("HSL", .cyan))  \(info.hsl.string)")
+            print("      \(styled("\u{2514}\u{2500}\u{2500}", .gray)) \(styled("CMYK", .cyan)) \(info.cmyk.string)")
         }
 
         print()

@@ -4,28 +4,33 @@
 ![macOS 14+](https://img.shields.io/badge/macOS-14%2B-000000?logo=apple&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue)
 
-Convert JSON color palettes to macOS color lists (`.clr`) with inline analysis — hex, RGB, HSL, CMYK, and WCAG contrast ratios at a glance.
+Convert JSON color palettes to macOS `.clr` color lists — custom colors for Microsoft Office, Keynote, Pages, and any app that uses the native color picker.
 
-![Palette analysis](assets/palette.png)
+<img src="assets/palette.png" alt="Palette output" width="380"> <img src="assets/word.png" alt="Aurora palette in the macOS color picker" width="264">
 
 ## What it does
 
-json2clr reads a JSON file containing named colors, displays each color with a terminal swatch and full color space breakdown (HSL, CMYK), and evaluates WCAG contrast ratios against white and black backgrounds. Colors that fail accessibility thresholds are flagged.
+macOS stores custom color palettes as `.clr` files in `~/Library/Colors/`. Once installed, they appear in the system color picker — the palette panel shared by every native and Cocoa-based app.
 
-Optionally, the palette can be exported as a macOS `.clr` color list — the native format used by the system color picker in any Cocoa app — or installed directly to `~/Library/Colors` where it appears in the color picker automatically.
+This means one `.clr` file gives brand colors to:
+
+- **Microsoft Office** — Word, Excel, PowerPoint, Outlook
+- **Apple iWork** — Pages, Numbers, Keynote
+- **Design tools** — Sketch, Figma (Mac app), Pixelmator
+- **Developer tools** — Xcode, Interface Builder
+- **Any app** that uses `NSColorPanel`
+
+json2clr reads a JSON file of named hex colors, displays each with a terminal swatch and color space breakdown (RGB, HSL, CMYK), and exports the palette as a `.clr` file — or installs it directly where the color picker can find it.
 
 ## Install
 
-Requires Swift 6.0+ and macOS 14+.
+Requires macOS 14+ (Sonoma) and Swift 6.0.
 
 ```sh
-make build
-make install
+git clone https://github.com/ansilithic/json2clr.git
+cd json2clr
+make build && make install
 ```
-
-This builds a release binary and copies it to `/usr/local/bin/json2clr`.
-
-![Help](assets/help.png)
 
 ## Usage
 
@@ -50,11 +55,13 @@ json2clr palette.json
 json2clr palette.json --clr
 
 # Export to a specific path
-json2clr palette.json --clr -o ~/Desktop/MyColors.clr
+json2clr palette.json --clr -o ~/Desktop/BrandColors.clr
 
 # Install directly to the macOS color picker
 json2clr palette.json --install
 ```
+
+After `--install`, open any app → color picker → palette tab → the new palette appears immediately.
 
 ## Input format
 

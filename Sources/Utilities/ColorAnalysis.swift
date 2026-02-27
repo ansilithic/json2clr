@@ -21,19 +21,6 @@ struct ColorInfo {
     let rgb: RGBComponents
     let hsl: HSLComponents
     let cmyk: CMYKComponents
-    let luminance: Double
-    let contrastOnWhite: Double
-    let contrastOnBlack: Double
-
-    var wcagOnWhite: String { wcagRating(contrastOnWhite) }
-    var wcagOnBlack: String { wcagRating(contrastOnBlack) }
-
-    private func wcagRating(_ ratio: Double) -> String {
-        if ratio >= 7 { return "AAA" }
-        if ratio >= 4.5 { return "AA" }
-        if ratio >= 3 { return "AA Large" }
-        return "Fail"
-    }
 }
 
 enum ColorAnalysis {
@@ -47,18 +34,11 @@ enum ColorAnalysis {
         let hsl = rgbToHSL(r: r, g: g, b: b)
         let cmyk = rgbToCMYK(r: r, g: g, b: b)
 
-        let lum = relativeLuminance(r: r, g: g, b: b)
-        let onWhite = contrastRatio(lum, 1.0)
-        let onBlack = contrastRatio(lum, 0.0)
-
         return ColorInfo(
             hex: hex,
             rgb: rgb,
             hsl: hsl,
-            cmyk: cmyk,
-            luminance: lum,
-            contrastOnWhite: onWhite,
-            contrastOnBlack: onBlack
+            cmyk: cmyk
         )
     }
 
@@ -108,18 +88,5 @@ enum ColorAnalysis {
             y: Int((y * 100).rounded()),
             k: Int((k * 100).rounded())
         )
-    }
-
-    private static func relativeLuminance(r: Double, g: Double, b: Double) -> Double {
-        func linearize(_ c: Double) -> Double {
-            c <= 0.03928 ? c / 12.92 : pow((c + 0.055) / 1.055, 2.4)
-        }
-        return 0.2126 * linearize(r) + 0.7152 * linearize(g) + 0.0722 * linearize(b)
-    }
-
-    private static func contrastRatio(_ l1: Double, _ l2: Double) -> Double {
-        let lighter = max(l1, l2)
-        let darker = min(l1, l2)
-        return (lighter + 0.05) / (darker + 0.05)
     }
 }
